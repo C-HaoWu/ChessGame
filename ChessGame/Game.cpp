@@ -87,10 +87,17 @@ void Game::playerControl() //選棋階段
 			// 這裡寫AI
 			if (gui.MenuInGame()) 
 			{
-				// 回合結束，換邊 顯示畫面
-				WhosTurn = !WhosTurn;
-				gui.displayChessboard(GameMap);
-				gui.displayGameInfo(WhosTurn, GameMap);
+				if (!GameMap.get_King(false)->getAlive())
+				{ 
+					Sleep(1000); gui.showAlert("       黑方勝利       ", 5000); 
+					return;
+				}
+				else  // 回合結束，換邊 顯示畫面
+				{
+					WhosTurn = !WhosTurn;
+					gui.displayChessboard(GameMap);
+					gui.displayGameInfo(WhosTurn, GameMap);
+				}				
 			}
 		}
 		else 
@@ -204,12 +211,12 @@ bool Game::moveChess() //確定移動
 			if (WhosTurn) 
 			{
 				gui.displayWDeathScreen(GameMap.pChess[cursorPos.X][cursorPos.Y], deadW++);
-			}			
+			}
 			else
 			{
 				gui.displayBDeathScreen(GameMap.pChess[cursorPos.X][cursorPos.Y], deadB++);
-			}			
-			GameMap.pChess[cursorPos.X][cursorPos.Y]->setAlive(false);			
+			}
+			GameMap.pChess[cursorPos.X][cursorPos.Y]->setAlive(false);
 		}
 		move(chessPos, cursorPos);
 		GameMap.pChess[cursorPos.X][cursorPos.Y]->Promote(); //士兵走到對面底線可以升變
@@ -249,7 +256,11 @@ void Game::move(COORD oriPos, COORD movePos)
 
 void Game::ArtificialIntelligence() 
 {
-	//選棋子
-
-	//動作
+	int bestMove = minimaxRoot(3, game, true);
 }
+
+int Game::minimaxRoot(int depth, game, bool isMaximisingPlayer)
+{
+
+}
+
