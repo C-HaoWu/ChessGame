@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <Windows.h>
+#define ROW_SIZE 8
+#define COLUMN_SIZE 8
 
 using std::string;
 class Map;
@@ -19,7 +21,7 @@ class Chess
 {
 public:
 	Chess() = delete;
-	Chess(string, bool, COORD);
+	Chess(string, bool, COORD, int[ROW_SIZE][COLUMN_SIZE]);
 	~Chess();
 
 	void setName(string);
@@ -30,6 +32,7 @@ public:
 	bool getColor() const;
 	int getMoved() const;
 	void Moved();  //每移動一次 moved 加一
+	int *getEvaluation()const;
 	
 	relativePosition rP(COORD) const; 
 	bool isChecking(COORD, const Map&) const;  //是否被控制 
@@ -45,7 +48,8 @@ private:
 	bool Color;  //黑為true 白為false
 	COORD Pos;   //size (8,8)內
 	bool alive;  //棋子死活
-	int moved;   //是否移動
+	int moved;   //是否移動	
+	int* Evaluation[ROW_SIZE][COLUMN_SIZE]; //位置評估值，for AI
 };
 
 class King : public Chess  // 國王
@@ -53,7 +57,7 @@ class King : public Chess  // 國王
 public:
 	King() = delete;
 	~King();
-	King(string, bool, COORD); 
+	King(string, bool, COORD, int [ROW_SIZE][COLUMN_SIZE]);
 	virtual bool isCastling(COORD, const Map&) const;
 	virtual bool isValid(COORD, const Map&) const;
 };
@@ -63,7 +67,7 @@ class Queen : public Chess // 皇后
 public:
 	Queen() = delete;
 	~Queen();
-	Queen(string, bool, COORD);
+	Queen(string, bool, COORD, int[ROW_SIZE][COLUMN_SIZE]);
 	virtual void setPos(COORD p);
 	virtual bool isValid(COORD, const Map&) const;
 private:
@@ -76,7 +80,7 @@ class Rook : public Chess // 城堡
 public:
 	Rook() = delete;
 	~Rook();
-	Rook(string, bool, COORD);
+	Rook(string, bool, COORD, int[ROW_SIZE][COLUMN_SIZE]);
 	virtual bool isValid(COORD, const Map&) const;
 };
 
@@ -85,7 +89,7 @@ class Bishop : public Chess // 主教
 public:
 	Bishop() = delete;
 	~Bishop();
-	Bishop(string, bool, COORD);
+	Bishop(string, bool, COORD, int[ROW_SIZE][COLUMN_SIZE]);
 	virtual bool isValid(COORD, const Map&) const;
 };
 
@@ -94,7 +98,7 @@ class Knight : public Chess // 騎士
 public:
 	Knight() = delete;
 	~Knight();
-	Knight(string, bool, COORD);
+	Knight(string, bool, COORD, int[ROW_SIZE][COLUMN_SIZE]);
 	virtual bool isValid(COORD, const Map&) const;
 };
 
@@ -103,7 +107,7 @@ class Pawn :public Chess  // 士兵
 public:
 	Pawn() = delete;
 	~Pawn();
-	Pawn(string, bool, COORD);
+	Pawn(string, bool, COORD, int[ROW_SIZE][COLUMN_SIZE]);
 	virtual void Promote();
 	virtual bool isPassing(SHORT, const Map&) const;
 	virtual void setPos(COORD);

@@ -7,22 +7,24 @@ using namespace std;
 
 GUI gui;
 
-Chess::Chess(string iName, bool icolor, COORD iPos) : Name(iName), Color(icolor), Pos(iPos), alive(true), moved(0) {}
-King::King(string iName, bool icolor, COORD iPos) : Chess(iName, icolor, iPos) {}
-Queen::Queen(string iName, bool icolor, COORD iPos) : Chess(iName, icolor, iPos)
+Chess::Chess(string iName, bool icolor, COORD iPos, int iEval[ROW_SIZE][COLUMN_SIZE])
+	: Name(iName), Color(icolor), Pos(iPos), alive(true), moved(0), Evaluation() {}
+
+King::King(string iName, bool icolor, COORD iPos, int iEval[ROW_SIZE][COLUMN_SIZE]) : Chess(iName, icolor, iPos, iEval) {}
+Queen::Queen(string iName, bool icolor, COORD iPos, int iEval[ROW_SIZE][COLUMN_SIZE]) : Chess(iName, icolor, iPos, iEval)
 {
-	rookTest = new Rook(iName, icolor, iPos);
-	bishopTest = new Bishop(iName, icolor, iPos);
+	rookTest = new Rook(iName, icolor, iPos, iEval);
+	bishopTest = new Bishop(iName, icolor, iPos, iEval);
 }
-Rook::Rook(string iName, bool icolor, COORD iPos) : Chess(iName, icolor, iPos) {}
-Bishop::Bishop(string iName, bool icolor, COORD iPos) : Chess(iName, icolor, iPos) {}
-Knight::Knight(string iName, bool icolor, COORD iPos) : Chess(iName, icolor, iPos) {}
-Pawn::Pawn(string iName, bool icolor, COORD iPos) : Chess(iName, icolor, iPos)
+Rook::Rook(string iName, bool icolor, COORD iPos, int iEval[ROW_SIZE][COLUMN_SIZE]) : Chess(iName, icolor, iPos, iEval) {}
+Bishop::Bishop(string iName, bool icolor, COORD iPos, int iEval[ROW_SIZE][COLUMN_SIZE]) : Chess(iName, icolor, iPos, iEval) {}
+Knight::Knight(string iName, bool icolor, COORD iPos, int iEval[ROW_SIZE][COLUMN_SIZE]) : Chess(iName, icolor, iPos, iEval) {}
+Pawn::Pawn(string iName, bool icolor, COORD iPos, int iEval[ROW_SIZE][COLUMN_SIZE]) : Chess(iName, icolor, iPos, iEval)
 {
-	Promotion[0] = new Queen("¢ß", icolor, iPos);
-	Promotion[1] = new Knight("¢Ü", icolor, iPos);
-	Promotion[2] = new Rook("¢à", icolor, iPos);
-	Promotion[3] = new Bishop("¢Ð", icolor, iPos);
+	Promotion[0] = new Queen("¢ß", icolor, iPos, iEval);
+	Promotion[1] = new Knight("¢Ü", icolor, iPos, iEval);
+	Promotion[2] = new Rook("¢à", icolor, iPos, iEval);
+	Promotion[3] = new Bishop("¢Ð", icolor, iPos, iEval);
 }
 
 Chess::~Chess() {}
@@ -70,6 +72,7 @@ string Chess::getName() const { return Name; }
 bool Chess::getColor() const { return Color; }
 COORD Chess::getPos() const { return Pos; }
 int Chess::getMoved() const { return moved; }
+int* Chess::getEvaluation() const { return **Evaluation; }
 void Chess::Moved() { moved++; }
 void Chess::Promote() {}
 bool Chess::getAlive() const { return alive; }
