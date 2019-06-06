@@ -1,11 +1,96 @@
-﻿  Game.cpp
-  正在產生程式碼...
-  正在編譯...
+﻿  Map.cpp
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(48): warning C4838: 從 'double' 到 'int' 的轉換必須是縮小轉換
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(41): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(42): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(43): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(44): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(45): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(46): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(47): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(48): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(50): error C3861: 'reverseArray': 找不到識別項
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(59): warning C4838: 從 'double' 到 'int' 的轉換必須是縮小轉換
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(52): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(53): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(54): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(55): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(56): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(57): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(58): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(59): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(68): warning C4838: 從 'double' 到 'int' 的轉換必須是縮小轉換
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(61): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(62): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(63): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(64): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(65): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(66): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(67): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(68): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(70): error C3861: 'reverseArray': 找不到識別項
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(79): warning C4838: 從 'double' 到 'int' 的轉換必須是縮小轉換
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(72): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(73): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(74): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(75): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(76): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(77): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(78): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(79): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(88): warning C4838: 從 'double' 到 'int' 的轉換必須是縮小轉換
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(81): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(82): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(83): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(84): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(85): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(86): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(87): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(88): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(90): error C3861: 'reverseArray': 找不到識別項
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(100): warning C4838: 從 'double' 到 'int' 的轉換必須是縮小轉換
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(92): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(93): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(94): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(95): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(96): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(97): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(98): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(99): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\map.cpp(102): error C3861: 'reverseArray': 找不到識別項
   main.cpp
-  Map.cpp
   GUI.cpp
-d:\users\hoa\desktop\c++_chessgame\chessgame\chessgame\gui.cpp(222): warning C4838: 從 'LONG' 到 'SHORT' 的轉換必須是縮小轉換
-d:\users\hoa\desktop\c++_chessgame\chessgame\chessgame\gui.cpp(222): warning C4244: '正在初始化': 將 'LONG' 轉換為 'SHORT'，由於類型不同，可能導致資料遺失
+d:\users\hoa\documents\github\chessgame\chessgame\gui.cpp(222): warning C4838: 從 'LONG' 到 'SHORT' 的轉換必須是縮小轉換
+d:\users\hoa\documents\github\chessgame\chessgame\gui.cpp(222): warning C4244: '正在初始化': 將 'LONG' 轉換為 'SHORT'，由於類型不同，可能導致資料遺失
+  Game.cpp
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(259): error C2065: 'game': 未宣告的識別項
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(259): error C3861: 'minimaxRoot': 找不到識別項
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(262): error C2039: 'minimaxRoot': 不是 'Game' 的成員
+  d:\users\hoa\documents\github\chessgame\chessgame\game.h(13): note: 請參閱 'Game' 的宣告
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(262): error C2061: 語法錯誤: 識別項 'game'
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(264): error C3078: 新運算式中必須指定陣列大小
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(272): error C2065: 'game': 未宣告的識別項
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(272): error C2065: 'isMaximisingPlayer': 未宣告的識別項
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(272): error C3861: 'minimax': 找不到識別項
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(291): error C3861: 'getPieceValue': 找不到識別項
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(297): error C3078: 新運算式中必須指定陣列大小
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(303): error C2065: 'Math': 未宣告的識別項
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(303): error C2059: 語法錯誤: '('
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(305): error C2228: '.alpha' 的左邊必須有類別/結構/等位
+  d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(305): note: 類型為 'unknown-type'
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(305): error C2059: 語法錯誤: '('
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(306): error C2228: '.beta' 的左邊必須有類別/結構/等位
+  d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(306): note: 類型為 'unknown-type'
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(316): error C2059: 語法錯誤: '('
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(318): error C2228: '.beta' 的左邊必須有類別/結構/等位
+  d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(318): note: 類型為 'unknown-type'
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(318): error C2059: 語法錯誤: '('
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(319): error C2228: '.beta' 的左邊必須有類別/結構/等位
+  d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(319): note: 類型為 'unknown-type'
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(327): error C2146: 語法錯誤: 遺漏 ')' (在識別項 'moveP' 之前)
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(328): error C2143: 語法錯誤: 遺漏 ';' (在 '{' 之前)
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(328): error C2447: '{': 遺漏函式標頭 (舊樣式型式清單?)
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(341): error C2062: 未預期的類型 'bool'
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(342): error C2143: 語法錯誤: 遺漏 ';' (在 '{' 之前)
+d:\users\hoa\documents\github\chessgame\chessgame\game.cpp(342): error C2447: '{': 遺漏函式標頭 (舊樣式型式清單?)
   Chess.cpp
   正在產生程式碼...
-  ChessGame.vcxproj -> D:\Users\Hoa\Desktop\C++_ChessGame\ChessGame\Debug\ChessGame.exe

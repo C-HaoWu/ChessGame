@@ -22,6 +22,10 @@ private:
 	bool moveChess();
 	void move(COORD, COORD);
 	void ArtificialIntelligence();
+	int minimaxRoot(int, bool);
+	int minimax(int, int, int, bool);
+	int getPieceValue(COORD);
+	Moving* getAllMoves();
 
 	COORD cursorPos, chessPos;
 	Map GameMap;

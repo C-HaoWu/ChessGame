@@ -9,6 +9,12 @@ COORD ComXY(SHORT x, SHORT y)
 	return COORD{ x, y };
 }
 
+struct Moving
+{
+	COORD from;
+	COORD to;
+};
+
 Game::Game()
 {
 	WhosTurn = false;  //¥Õ´Ñ¥ý¦æ	
@@ -256,10 +262,10 @@ void Game::move(COORD oriPos, COORD movePos)
 
 void Game::ArtificialIntelligence() 
 {
-	int bestMove = minimaxRoot(3, game, true);
+	int bestMove = minimaxRoot(3, true);
 }
 
-int Game::minimaxRoot(int depth, game, bool isMaximisingPlayer)
+int Game::minimaxRoot(int depth, bool isMaximisingPlayer)
 {
 	int *newGameMoves = new int[]; // var newGameMoves = game.ugly_moves();
 	int BestValue = -9999;
@@ -269,7 +275,7 @@ int Game::minimaxRoot(int depth, game, bool isMaximisingPlayer)
 	{
 		int newGameMove = newGameMoves[i];
 		// game.ugly_move(newGameMove);
-		int value = minimax(depth - 1, game, -10000, 10000, !isMaximisingPlayer);
+		int value = minimax(depth - 1, -10000, 10000, !isMaximisingPlayer);
 		// game.undo();
 
 		if (value >= BestValue) {
@@ -281,25 +287,27 @@ int Game::minimaxRoot(int depth, game, bool isMaximisingPlayer)
 	return BestMoveFound;
 }
 
-int Game::minimax(int depth, game, int alpha, int beta, bool isMaximisingPlayer)
+int Game::minimax(int depth,  int alpha, int beta, bool isMaximisingPlayer)
 {
 	if (depth == 0) {
 		int totalEvaluation = 0;
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				totalEvaluation = totalEvaluation + getPieceValue(board[i][j], i, j);
+				COORD moveP;
+				totalEvaluation = totalEvaluation + getPieceValue(moveP);
 			}
 		}
 		return -totalEvaluation;
 	}
 
-	int *newGameMoves = new int[]; // var newGameMoves = game.ugly_moves();
+	// var newGameMoves = game.ugly_moves();
+	Moving *newGameMoves = getAllMoves();
 
 	if (isMaximisingPlayer) {
 		int bestMove = -9999;
 		for (int i = 0; i < sizeof(newGameMoves); i++) {
 			// game.ugly_move(newGameMoves[i]);
-			bestMove = Math.max(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer));
+			bestMove = Math.max(bestMove, minimax(depth - 1, alpha, beta, !isMaximisingPlayer));
 			// game.undo();
 			alpha = Math.max(alpha, bestMove);
 			if (beta <= alpha) {
@@ -312,7 +320,7 @@ int Game::minimax(int depth, game, int alpha, int beta, bool isMaximisingPlayer)
 		int bestMove = 9999;
 		for (int i = 0; i < sizeof(newGameMoves); i++) {
 			// game.ugly_move(newGameMoves[i]);
-			bestMove = Math.min(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer));
+			bestMove = Math.min(bestMove, minimax(depth - 1, alpha, beta, !isMaximisingPlayer));
 			// game.undo();
 			beta = Math.min(beta, bestMove);
 			if (beta <= alpha) {
@@ -323,39 +331,82 @@ int Game::minimax(int depth, game, int alpha, int beta, bool isMaximisingPlayer)
 	}
 }
 
-int getPieceValue(piece, int x, int y)
+int Game::getPieceValue(COORD moveP)
 {
-	if (piece == NULL) 
+	Chess *ch = GameMap.pChess[moveP.X][moveP.Y];
+	if (ch == NULL) 
 	{
 		return 0;
 	}
 	else 
 	{
-		int absoluteValue = getAbsoluteValue(piece, piece.color == 'w', x, y);
-		return piece.color == 'w' ? absoluteValue : -absoluteValue;
+		int absoluteValue = getAbsoluteValue(ch, ch->getColor() == false, moveP);
+		return ch->getColor() == false ? absoluteValue : -absoluteValue;
 	}	
 }
 
-int getAbsoluteValue(piece, isWhite, int x, int y)
+int getAbsoluteValue(Chess *ch, bool isWhite, COORD moveP)
 {
-	if (piece.type == 'p') {
-		return 10 + (isWhite ? pawnEvalWhite[y][x] : pawnEvalBlack[y][x]);
+	switch (ch->getName) 
+	{
+		case 'P':
+			return 10 + (isWhite ? PawnEvalWhite[y][x] : PawnEvalBlack[y][x]);
+			break;
+		case 'R':
+			return 50 + (isWhite ? RookEvalWhite[y][x] : RookEvalBlack[y][x]);
+			break;
+		case 'N':
+			return 30 + KnightEval[y][x];
+			break;
+		case 'B':
+			return 30 + (isWhite ? BishopEvalWhite[y][x] : BishopEvalBlack[y][x]);
+			break;
+		case 'Q':
+			return 90 + QueenEval[y][x];
+			break;
+		case 'K':
+			return 900 + (isWhite ? KingEvalWhite[y][x] : KingEvalBlack[y][x]);
+			break;
+		default:
+			return 0;
+			break;
 	}
-	else if (piece.type == 'r') {
-		return 50 + (isWhite ? rookEvalWhite[y][x] : rookEvalBlack[y][x]);
-	}
-	else if (piece.type == 'n') {
-		return 30 + knightEval[y][x];
-	}
-	else if (piece.type == 'b') {
-		return 30 + (isWhite ? bishopEvalWhite[y][x] : bishopEvalBlack[y][x]);
-	}
-	else if (piece.type == 'q') {
-		return 90 + evalQueen[y][x];
-	}
-	else if (piece.type == 'k') {
-		return 900 + (isWhite ? kingEvalWhite[y][x] : kingEvalBlack[y][x]);
-	}
-	throw "Unknown piece type: " + piece.type;
 }
 
+Moving* Game::getAllMoves() 
+{
+	Moving *allMoves = new Moving[];
+	int index = 0;
+
+	for (int i = 0; i < ROW_SIZE; i++) 
+	{
+		for (int j = 0; j < COLUMN_SIZE; j++)
+		{
+			COORD from;
+			from.X = i;
+			from.Y = j;
+			chessPos = from;
+
+			if (GameMap.pChess[chessPos.X][chessPos.Y] != NULL && GameMap.pChess[chessPos.X][chessPos.Y]->getColor() == WhosTurn) 
+			{
+				for (int p = 0; p < ROW_SIZE; p++)
+				{
+					for (int q = 0; q < COLUMN_SIZE; q++)
+					{
+						COORD to;
+						to.X = p;
+						to.Y = q;
+						cursorPos = to;
+						if (moveChess()) 
+						{
+							allMoves[index].from = from;
+							allMoves[index].to = to;
+							index++;
+						}
+					}
+				}
+			}
+		}
+	}
+	return allMoves;
+}
