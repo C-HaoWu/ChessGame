@@ -16,6 +16,8 @@ public:
 	bool isChecking(bool) const;
 	Chess* get_King(bool) const;
 	Chess* pChess[ROW_SIZE][COLUMN_SIZE];
+	void reverseArray(int white[ROW_SIZE][COLUMN_SIZE], int black[ROW_SIZE][COLUMN_SIZE]);
+
 private:
 	Chess* bKing;
 	Chess* wKing;
@@ -50,5 +52,4 @@ private:
 	Chess* wPawn7;
 	Chess* wPawn8;
 };
-
 #endif
