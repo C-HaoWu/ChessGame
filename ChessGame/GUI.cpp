@@ -179,14 +179,15 @@ bool GUI::showConfirm(const string& info)
 	bool point = false;
 	setColor(12);
 	gotoxy(MID_X - 12, MID_Y - 3);
-	cout << "שÝשששששששששששששששששששששששß"; gotoxy(MID_X - 12, MID_Y - 2);
+	cout << "שÝשששששששששששששששששששששששששששששששששששששששששששששß"; gotoxy(MID_X - 12, MID_Y - 2);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y - 1);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y);
 	cout << "שר"; showTextColor(info, DEFAULT_COLOR); setColor(12); cout << "שר"; gotoxy(MID_X - 12, MID_Y + 1);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y + 2);
 	cout << "שר     ¬O        §_     שר"; gotoxy(MID_X - 12, MID_Y + 3);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y + 4);
-	cout << "שדשששששששששששששששששששששששו";
+	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y + 5);
+	cout << "שדשששששששששששששששששששששששששששששששששששששששששששששו";
 	char KB;
 	while (true)
 	{
@@ -466,14 +467,15 @@ void GUI::showAlert(const string info, const short time)
 	setVisible(false);
 	setColor(12);
 	gotoxy(MID_X - 12, MID_Y - 3);
-	cout << "שÝשששששששששששששששששששששששß"; gotoxy(MID_X - 12, MID_Y - 2);
+	cout << "שÝשששששששששששששששששששששששששששששששששששששששששששששß"; gotoxy(MID_X - 12, MID_Y - 2);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y - 1);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y);
-	cout << "שר"; showTextColor(info, DEFAULT_COLOR); setColor(12); cout << "שר"; gotoxy(MID_X - 12, MID_Y + 1);
-	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y + 2);
+	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y + 1);
+	cout << "שר"; showTextColor(info, DEFAULT_COLOR); setColor(12); cout << "שר"; gotoxy(MID_X - 12, MID_Y + 2);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y + 3);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y + 4);
-	cout << "שדשששששששששששששששששששששששו";
+	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y + 5);
+	cout << "שדשששששששששששששששששששששששששששששששששששששששששששששו";
 	setColor(DEFAULT_COLOR);
 	Sleep(time);
 	WriteConsoleOutputA(hConsole, consoleBuffer, characterBufferSize, characterPosition, &consoleWriteArea);
@@ -545,7 +547,7 @@ int GUI::displayUpgradeScreen()
 	setVisible(true);
 	setColor(12);
 	gotoxy(MID_X - 12, MID_Y - 5);
-	cout << "שÝשששששששששששששששששששששששß"; gotoxy(MID_X - 12, MID_Y - 4);
+	cout << "שÝשששששששששששששששששששששששששששששששששששששששששששששß"; gotoxy(MID_X - 12, MID_Y - 4);
 	cout << "שר"; showTextColor("¡@½׀¿ן¾Ü­n₪ֹ¯ֵ×÷´ׁ₪l¡@", DEFAULT_COLOR); setColor(12); cout << "שר"; gotoxy(MID_X - 12, MID_Y - 3);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y - 2);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y - 1);
@@ -555,7 +557,7 @@ int GUI::displayUpgradeScreen()
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y + 3);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y + 4);
 	cout << "שר                      שר"; gotoxy(MID_X - 12, MID_Y + 5);
-	cout << "שדשששששששששששששששששששששששו";
+	cout << "שדשששששששששששששששששששששששששששששששששששששששששששששו";
 	setColor(DEFAULT_COLOR); CHAR Input;
 	while (!decided)
 	{

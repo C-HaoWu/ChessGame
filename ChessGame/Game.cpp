@@ -9,11 +9,7 @@ COORD ComXY(SHORT x, SHORT y)
 	return COORD{ x, y };
 }
 
-struct Moving
-{
-	COORD from;
-	COORD to;
-};
+
 
 Game::Game()
 {
@@ -90,8 +86,10 @@ void Game::playerControl() //選棋階段
 	{
 		if (AI == true && WhosTurn == true) 
 		{
+			COORD savePos = cursorPos;
+
 			// 這裡寫AI
-			if (gui.MenuInGame()) 
+			if (ArtificialIntelligence())
 			{
 				if (!GameMap.get_King(false)->getAlive())
 				{ 
@@ -100,11 +98,13 @@ void Game::playerControl() //選棋階段
 				}
 				else  // 回合結束，換邊 顯示畫面
 				{
-					WhosTurn = !WhosTurn;
+					WhosTurn = !WhosTurn;					
 					gui.displayChessboard(GameMap);
-					gui.displayGameInfo(WhosTurn, GameMap);
-				}				
+					gui.displayGameInfo(WhosTurn, GameMap);					
+				}
 			}
+
+			cursorPos = savePos;
 		}
 		else 
 		{
@@ -224,7 +224,7 @@ bool Game::moveChess() //確定移動
 			}
 			GameMap.pChess[cursorPos.X][cursorPos.Y]->setAlive(false);
 		}
-		move(chessPos, cursorPos);
+		move(chessPos, cursorPos, false);
 		GameMap.pChess[cursorPos.X][cursorPos.Y]->Promote(); //士兵走到對面底線可以升變
 
 		WhosTurn = !WhosTurn; //完成此半回合，交換出棋方
@@ -235,8 +235,8 @@ bool Game::moveChess() //確定移動
 		if (gui.showConfirm("      王車易位 ?      ")) 
 		{
 			COORD castling = ComXY((chessPos.X > cursorPos.X ? -2 : 2), (chessPos.X > cursorPos.X ? 3 : -2));
-			move(chessPos, ComXY((chessPos.X + castling.X), chessPos.Y));
-			move(cursorPos, ComXY((cursorPos.X + castling.Y), cursorPos.Y));
+			move(chessPos, ComXY((chessPos.X + castling.X), chessPos.Y), false);
+			move(cursorPos, ComXY((cursorPos.X + castling.Y), cursorPos.Y), false);
 			WhosTurn = !WhosTurn; //完成此半回合，交換出棋方			
 		}
 		return true;
@@ -245,6 +245,7 @@ bool Game::moveChess() //確定移動
 	{
 		if (GameMap.pChess[cursorPos.X][cursorPos.Y]->getColor() == GameMap.pChess[chessPos.X][chessPos.Y]->getColor())  //選到別的同色棋
 		{
+			if (AI == true && WhosTurn == true) { return false; }
 			return true;
 		}
 	}
@@ -252,38 +253,93 @@ bool Game::moveChess() //確定移動
 	return false;
 }
 
-void Game::move(COORD oriPos, COORD movePos)
+bool Game::AImoveChess()
+{
+	if (GameMap.pChess[chessPos.X][chessPos.Y]->isValid(cursorPos, GameMap)) //移動狀況
+	{
+		if (GameMap.pChess[chessPos.X][chessPos.Y]->isPassing(cursorPos.X, GameMap))
+		{			
+			GameMap.pChess[cursorPos.X][chessPos.Y]->setAlive(false);
+			GameMap.pChess[cursorPos.X][chessPos.Y] = NULL;
+		}
+		if (GameMap.pChess[cursorPos.X][cursorPos.Y] != NULL) //吃子狀況	
+		{			
+			GameMap.pChess[cursorPos.X][cursorPos.Y]->setAlive(false);
+		}
+		move(chessPos, cursorPos, true);
+		GameMap.pChess[cursorPos.X][cursorPos.Y]->Promote(); //士兵走到對面底線可以升變
+		
+		return true;
+	}	
+	else if (GameMap.pChess[cursorPos.X][cursorPos.Y] != NULL)
+	{
+		if (GameMap.pChess[cursorPos.X][cursorPos.Y]->getColor() == GameMap.pChess[chessPos.X][chessPos.Y]->getColor())  //選到別的同色棋
+		{
+			if (AI == true && WhosTurn == true) { return false; }
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void Game::move(COORD oriPos, COORD movePos, bool AI)
 {
 	GameMap.pChess[movePos.X][movePos.Y] = GameMap.pChess[oriPos.X][oriPos.Y];		//覆蓋pointer
 	GameMap.pChess[oriPos.X][oriPos.Y] = NULL;							            //刪除原本位置的pointer
-	GameMap.pChess[movePos.X][movePos.Y]->setPos(movePos);						    //更改Chess的位置
-	GameMap.pChess[movePos.X][movePos.Y]->Moved();									//移動一次	
+
+	if (AI != true) 
+	{
+		GameMap.pChess[movePos.X][movePos.Y]->setPos(movePos);						//更改Chess的位置
+		GameMap.pChess[movePos.X][movePos.Y]->Moved();								//移動一次
+	}	
 }
 
-void Game::ArtificialIntelligence() 
+bool Game::ArtificialIntelligence() 
 {
-	int bestMove = minimaxRoot(3, true);
+	try{
+		Moving bestMove = minimaxRoot(3, true);
+		move(bestMove.from, bestMove.to, false);
+		return true;
+	}
+	catch (exception ex) 
+	{
+		return false;
+	}	
 }
 
-int Game::minimaxRoot(int depth, bool isMaximisingPlayer)
+Moving Game::minimaxRoot(int depth, bool isMaximisingPlayer)
 {
-	int *newGameMoves = new int[]; // var newGameMoves = game.ugly_moves();
-	int BestValue = -9999;
-	int BestMoveFound;
+	// var newGameMoves = game.ugly_moves();
+	Moving *newGameMoves = getAllMoves();
+	int BestValue = -99999;
+	Moving BestMoveFound;
 
 	for (int i = 0; i < sizeof(newGameMoves); i++) 
 	{
-		int newGameMove = newGameMoves[i];
-		// game.ugly_move(newGameMove);
-		int value = minimax(depth - 1, -10000, 10000, !isMaximisingPlayer);
-		// game.undo();
+		Moving newGameMove = newGameMoves[i];
+		//// game.ugly_move(newGameMove);
+		// set new map
+		Chess *ch[ROW_SIZE][COLUMN_SIZE];
+		int deadb=0, deadw=0;
+		saveMap(ch, deadb, deadw);
+		// set chessPos, cusorPos
+		chessPos = newGameMove.from;
+		cursorPos = newGameMove.to;
+		//move
+		AImoveChess();
+		
+		int value = minimax(depth - 1, -100000, 100000, !isMaximisingPlayer);
+		
+		//// game.undo();
+		redoMap(ch, deadb, deadw);
 
 		if (value >= BestValue) {
 			BestValue = value;
 			BestMoveFound = newGameMove;
 		}
 	}
-
+	delete[] newGameMoves;
 	return BestMoveFound;
 }
 
@@ -293,7 +349,7 @@ int Game::minimax(int depth,  int alpha, int beta, bool isMaximisingPlayer)
 		int totalEvaluation = 0;
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				COORD moveP;
+				COORD moveP = ComXY(i, j);
 				totalEvaluation = totalEvaluation + getPieceValue(moveP);
 			}
 		}
@@ -304,31 +360,118 @@ int Game::minimax(int depth,  int alpha, int beta, bool isMaximisingPlayer)
 	Moving *newGameMoves = getAllMoves();
 
 	if (isMaximisingPlayer) {
-		int bestMove = -9999;
+		int bestMove = -99999;
 		for (int i = 0; i < sizeof(newGameMoves); i++) {
-			// game.ugly_move(newGameMoves[i]);
-			bestMove = Math.max(bestMove, minimax(depth - 1, alpha, beta, !isMaximisingPlayer));
-			// game.undo();
-			alpha = Math.max(alpha, bestMove);
-			if (beta <= alpha) {
+			////game.ugly_move(newGameMoves[i]);
+			// set new map
+			Chess *ch[ROW_SIZE][COLUMN_SIZE];
+			int deadb=0, deadw=0;
+			saveMap(ch, deadb, deadw);
+			// set chessPos, cusorPos
+			chessPos = newGameMoves[i].from;
+			cursorPos = newGameMoves[i].to;
+			//move
+			AImoveChess();
+			//move(newGameMoves[i].from, newGameMoves[i].to);			
+
+			////bestMove = Math.max(bestMove, minimax(depth - 1, alpha, beta, !isMaximisingPlayer));
+			int mim = minimax(depth - 1, alpha, beta, !isMaximisingPlayer);
+			bestMove = bestMove > mim ? bestMove : mim;						
+			
+			////game.undo();
+			redoMap(ch, deadb, deadw);
+			//move(newGameMoves[i].to, newGameMoves[i].from);
+
+			////alpha = Math.max(alpha, bestMove);
+			alpha = alpha > bestMove ? alpha : bestMove;
+			
+
+			if (beta <= alpha) 
+			{
+				delete[] newGameMoves;
 				return bestMove;
 			}
 		}
+		delete[] newGameMoves;
 		return bestMove;
 	}
 	else {
-		int bestMove = 9999;
+		int bestMove = 99999;
 		for (int i = 0; i < sizeof(newGameMoves); i++) {
-			// game.ugly_move(newGameMoves[i]);
-			bestMove = Math.min(bestMove, minimax(depth - 1, alpha, beta, !isMaximisingPlayer));
-			// game.undo();
-			beta = Math.min(beta, bestMove);
-			if (beta <= alpha) {
+			
+			////game.ugly_move(newGameMoves[i]);
+			// set new map
+			Chess *ch[ROW_SIZE][COLUMN_SIZE];
+			int deadb=0, deadw=0;
+			saveMap(ch, deadb, deadw);
+			// set chessPos, cusorPos
+			chessPos = newGameMoves[i].from;
+			cursorPos = newGameMoves[i].to;
+			//move
+			AImoveChess();
+			//move(newGameMoves[i].from, newGameMoves[i].to);
+
+			////bestMove = Math.min(bestMove, minimax(depth - 1, alpha, beta, !isMaximisingPlayer));
+			int mim = minimax(depth - 1, alpha, beta, !isMaximisingPlayer);
+			bestMove = bestMove < mim ? bestMove : mim;
+			
+			////game.undo();
+			redoMap(ch, deadb, deadw);
+			//move(newGameMoves[i].to, newGameMoves[i].from);
+
+			////beta = Math.min(beta, bestMove);
+			beta = alpha < bestMove ? beta : bestMove;			
+
+			if (beta <= alpha) 
+			{
+				delete[] newGameMoves;
 				return bestMove;
 			}
 		}
+		delete[] newGameMoves;
 		return bestMove;
 	}
+}
+
+Moving* Game::getAllMoves()
+{
+	Moving *allMoves = new Moving[9999];
+	int index = 0;	
+
+	for (int i = 0; i < ROW_SIZE; i++)
+	{
+		for (int j = 0; j < COLUMN_SIZE; j++)
+		{
+			COORD from = ComXY(i, j);
+			chessPos = from;
+
+			if (GameMap.pChess[chessPos.X][chessPos.Y] != NULL && GameMap.pChess[chessPos.X][chessPos.Y]->getColor() == WhosTurn)
+			{
+				for (int p = 0; p < ROW_SIZE; p++)
+				{
+					for (int q = 0; q < COLUMN_SIZE; q++)
+					{
+						COORD to = ComXY(p, q);						
+						cursorPos = to;
+
+						Chess *ch[ROW_SIZE][COLUMN_SIZE];
+						int deadb = 0, deadw = 0;
+						saveMap(ch, deadb, deadw);
+						
+						if (!(from.X == to.X && from.Y == to.Y) && AImoveChess())
+						{							
+							allMoves[index].from = from;
+							allMoves[index].to = to;
+							index++;
+
+							redoMap(ch, deadb, deadw);
+						}
+					}
+				}
+			}
+		}
+	}
+	return allMoves;
 }
 
 int Game::getPieceValue(COORD moveP)
@@ -345,68 +488,40 @@ int Game::getPieceValue(COORD moveP)
 	}	
 }
 
-int getAbsoluteValue(Chess *ch, bool isWhite, COORD moveP)
+int Game::getAbsoluteValue(Chess *ch, bool isWhite, COORD moveP)
 {
-	switch (ch->getName) 
+	int chessEval = isWhite ? ch->getEvaluation(moveP.X, moveP.Y) : ch->getEvaluation(ROW_SIZE - moveP.X - 1, COLUMN_SIZE - moveP.Y - 1);
+	if (ch->getName() == "Ｐ") { return 100 + chessEval; }
+	else if (ch->getName() == "Ｒ") { return 500 + chessEval; }
+	else if (ch->getName() == "Ｎ") { return 300 + chessEval; }
+	else if (ch->getName() == "Ｂ") { return 300 + chessEval; }
+	else if (ch->getName() == "Ｑ") { return 900 + chessEval; }
+	else if (ch->getName() == "Ｋ") { return 9000 + chessEval; }
+	else { return 0; }	
+}
+
+void Game::saveMap(Chess *ch[ROW_SIZE][COLUMN_SIZE], int &deadb, int &deadw)
+{
+	deadb = deadB;
+	deadw = deadW;
+	for (int s = 0; s < ROW_SIZE; s++)
 	{
-		case 'P':
-			return 10 + (isWhite ? PawnEvalWhite[y][x] : PawnEvalBlack[y][x]);
-			break;
-		case 'R':
-			return 50 + (isWhite ? RookEvalWhite[y][x] : RookEvalBlack[y][x]);
-			break;
-		case 'N':
-			return 30 + KnightEval[y][x];
-			break;
-		case 'B':
-			return 30 + (isWhite ? BishopEvalWhite[y][x] : BishopEvalBlack[y][x]);
-			break;
-		case 'Q':
-			return 90 + QueenEval[y][x];
-			break;
-		case 'K':
-			return 900 + (isWhite ? KingEvalWhite[y][x] : KingEvalBlack[y][x]);
-			break;
-		default:
-			return 0;
-			break;
+		for (int r = 0; r < COLUMN_SIZE; r++)
+		{
+			ch[s][r] = GameMap.pChess[s][r];
+		}
 	}
 }
 
-Moving* Game::getAllMoves() 
+void Game::redoMap(Chess *ch[ROW_SIZE][COLUMN_SIZE], int deadb, int deadw) 
 {
-	Moving *allMoves = new Moving[];
-	int index = 0;
-
-	for (int i = 0; i < ROW_SIZE; i++) 
+	deadB = deadb;
+	deadW = deadw;
+	for (int s = 0; s < ROW_SIZE; s++)
 	{
-		for (int j = 0; j < COLUMN_SIZE; j++)
+		for (int r = 0; r < COLUMN_SIZE; r++)
 		{
-			COORD from;
-			from.X = i;
-			from.Y = j;
-			chessPos = from;
-
-			if (GameMap.pChess[chessPos.X][chessPos.Y] != NULL && GameMap.pChess[chessPos.X][chessPos.Y]->getColor() == WhosTurn) 
-			{
-				for (int p = 0; p < ROW_SIZE; p++)
-				{
-					for (int q = 0; q < COLUMN_SIZE; q++)
-					{
-						COORD to;
-						to.X = p;
-						to.Y = q;
-						cursorPos = to;
-						if (moveChess()) 
-						{
-							allMoves[index].from = from;
-							allMoves[index].to = to;
-							index++;
-						}
-					}
-				}
-			}
+			GameMap.pChess[s][r] = ch[s][r];
 		}
 	}
-	return allMoves;
 }

@@ -32,7 +32,7 @@ public:
 	bool getColor() const;
 	int getMoved() const;
 	void Moved();  //每移動一次 moved 加一
-	int *getEvaluation()const;
+	int getEvaluation(SHORT, SHORT)const;
 	
 	relativePosition rP(COORD) const; 
 	bool isChecking(COORD, const Map&) const;  //是否被控制 
@@ -49,7 +49,7 @@ private:
 	COORD Pos;   //size (8,8)內
 	bool alive;  //棋子死活
 	int moved;   //是否移動	
-	int* Evaluation[ROW_SIZE][COLUMN_SIZE]; //位置評估值，for AI
+	int Evaluation[ROW_SIZE][COLUMN_SIZE]; //位置評估值，for AI
 };
 
 class King : public Chess  // 國王

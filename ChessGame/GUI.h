@@ -178,7 +178,7 @@ public:
 	void displayAboutScreen();
 	int displayUpgradeScreen();
 	void gotoxy(COORD);
-	void gotoxy(short, short);
+	void gotoxy(SHORT, SHORT);
 	void showTextColor(string, SHORT);
 	void displayBDeathScreen(const Chess*, int);
 	void displayWDeathScreen(const Chess*, int);

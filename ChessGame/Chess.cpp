@@ -72,7 +72,7 @@ string Chess::getName() const { return Name; }
 bool Chess::getColor() const { return Color; }
 COORD Chess::getPos() const { return Pos; }
 int Chess::getMoved() const { return moved; }
-int* Chess::getEvaluation() const { return **Evaluation; }
+int Chess::getEvaluation(SHORT x, SHORT y) const { return Evaluation[x][y]; }
 void Chess::Moved() { moved++; }
 void Chess::Promote() {}
 bool Chess::getAlive() const { return alive; }
@@ -233,6 +233,7 @@ bool Pawn::isValid(COORD moveP, const Map& map) const
 {
 	if (getName() == "Ｐ") {
 		Chess *ch = map.pChess[moveP.X][moveP.Y];
+		COORD coord = getPos();
 		COORD distance = ComXY(abs(moveP.X - getPos().X), abs(moveP.Y - getPos().Y));
 
 		if (ch != NULL && getColor() == ch->getColor()) //同色回傳false
